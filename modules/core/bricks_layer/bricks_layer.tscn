@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi4w2m7nrr68q"]
+
+[ext_resource type="Script" path="res://modules/core/bricks_layer/bricks_layer.gd" id="1_hjw13"]
+[ext_resource type="Resource" uid="uid://boape4xjb0g1n" path="res://modules/core/arm/arm_signals_channel.tres" id="2_3qw8a"]
+[ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="3_tbccr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqu5j"]
+size = Vector2(300, 100)
+
+[node name="BricksLayer" type="CharacterBody2D"]
+position = Vector2(576, 199)
+scale = Vector2(1.00004, 1.00004)
+collision_layer = 0
+script = ExtResource("1_hjw13")
+_arm_signals_channel = ExtResource("2_3qw8a")
+_bricks_layers_signals_channel = ExtResource("3_tbccr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rqu5j")
+
+[node name="ValidCollisionDetector" type="RayCast2D" parent="."]
+target_position = Vector2(0, 80)

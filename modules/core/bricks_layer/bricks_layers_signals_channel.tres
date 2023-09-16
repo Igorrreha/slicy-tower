@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="BricksLayersSignalsChannel" load_steps=2 format=3 uid="uid://diy8hwfovbw8i"]
+
+[ext_resource type="Script" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.gd" id="1_6dpxj"]
+
+[resource]
+script = ExtResource("1_6dpxj")
