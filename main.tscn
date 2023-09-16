@@ -1,3 +1,92 @@
-[gd_scene format=3 uid="uid://b5aveeo57hmck"]
+[gd_scene load_steps=10 format=3 uid="uid://bufpahaehp068"]
+
+[ext_resource type="Script" path="res://modules/core/arm/arm.gd" id="1_ohxi4"]
+[ext_resource type="Script" path="res://modules/core/bricks_layer/bricks_layer.gd" id="2_6n0ks"]
+[ext_resource type="Resource" uid="uid://boape4xjb0g1n" path="res://modules/core/arm/arm_signals_channel.tres" id="2_i4yd2"]
+[ext_resource type="Script" path="res://modules/common/channel_signals_trasmitter/channel_signals_transmitter.gd" id="4_3bqqh"]
+[ext_resource type="Script" path="res://modules/common/action_press_handler/action_press_handler.gd" id="5_rix7c"]
+
+[sub_resource type="Animation" id="Animation_4n6bn"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_pat8y"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-1.178, -0.25, 0, 0.5, 0, 1.178, -0.5, 0, 0.5, 0, -1.178, -0.5, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hycj0"]
+_data = {
+"RESET": SubResource("Animation_4n6bn"),
+"idle": SubResource("Animation_pat8y")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqu5j"]
+size = Vector2(300, 100)
 
 [node name="Main" type="Node"]
+
+[node name="GameWorld" type="Node2D" parent="."]
+
+[node name="Arm" type="Node2D" parent="GameWorld"]
+position = Vector2(548, 4)
+script = ExtResource("1_ohxi4")
+_signals_channel = ExtResource("2_i4yd2")
+
+[node name="GrabPoint" type="Node2D" parent="GameWorld/Arm"]
+unique_name_in_owner = true
+position = Vector2(0, 195)
+
+[node name="Grabber" type="RemoteTransform2D" parent="GameWorld/Arm/GrabPoint"]
+unique_name_in_owner = true
+remote_path = NodePath("../../../BricksLayer")
+update_rotation = false
+update_scale = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameWorld/Arm"]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_hycj0")
+}
+
+[node name="BricksLayer" type="Area2D" parent="GameWorld"]
+position = Vector2(548, 199)
+scale = Vector2(1.00004, 1.00004)
+script = ExtResource("2_6n0ks")
+_arm_signals_channel = ExtResource("2_i4yd2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/BricksLayer"]
+shape = SubResource("RectangleShape2D_rqu5j")
+
+[node name="UserInput" type="Node" parent="."]
+
+[node name="ChannelSignalsTransmitter" type="Node" parent="UserInput"]
+script = ExtResource("4_3bqqh")
+_signals_channel = ExtResource("2_i4yd2")
+
+[node name="RelaxGrabberActionHandler" type="Node" parent="UserInput/ChannelSignalsTransmitter"]
+script = ExtResource("5_rix7c")
+_action = &"relax_grabber"
+
+[connection signal="action_pressed" from="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" to="UserInput/ChannelSignalsTransmitter" method="transmit" binds= [&"grabber_relax_requested"]]
