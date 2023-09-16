@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://bufpahaehp068"]
+[gd_scene load_steps=12 format=3 uid="uid://bufpahaehp068"]
 
+[ext_resource type="Script" path="res://modules/core/bricks_layer_spawner/bricks_layer_spawner.gd" id="1_0jynu"]
 [ext_resource type="Script" path="res://modules/core/arm/arm.gd" id="1_ohxi4"]
-[ext_resource type="Script" path="res://modules/core/bricks_layer/bricks_layer.gd" id="2_6n0ks"]
 [ext_resource type="Resource" uid="uid://boape4xjb0g1n" path="res://modules/core/arm/arm_signals_channel.tres" id="2_i4yd2"]
 [ext_resource type="Script" path="res://modules/common/channel_signals_trasmitter/channel_signals_transmitter.gd" id="4_3bqqh"]
+[ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="4_w2fuv"]
+[ext_resource type="PackedScene" uid="uid://bi4w2m7nrr68q" path="res://modules/core/bricks_layer/bricks_layer.tscn" id="5_1r27b"]
 [ext_resource type="Script" path="res://modules/common/action_press_handler/action_press_handler.gd" id="5_rix7c"]
+[ext_resource type="PackedScene" uid="uid://cp8l8laql0p4t" path="res://modules/core/building/building.tscn" id="6_vh5ow"]
 
 [sub_resource type="Animation" id="Animation_4n6bn"]
 length = 0.001
@@ -42,15 +45,12 @@ _data = {
 "idle": SubResource("Animation_pat8y")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqu5j"]
-size = Vector2(300, 100)
-
 [node name="Main" type="Node"]
 
 [node name="GameWorld" type="Node2D" parent="."]
 
 [node name="Arm" type="Node2D" parent="GameWorld"]
-position = Vector2(548, 4)
+position = Vector2(576, 0)
 script = ExtResource("1_ohxi4")
 _signals_channel = ExtResource("2_i4yd2")
 
@@ -60,7 +60,6 @@ position = Vector2(0, 195)
 
 [node name="Grabber" type="RemoteTransform2D" parent="GameWorld/Arm/GrabPoint"]
 unique_name_in_owner = true
-remote_path = NodePath("../../../BricksLayer")
 update_rotation = false
 update_scale = false
 
@@ -70,14 +69,17 @@ libraries = {
 "": SubResource("AnimationLibrary_hycj0")
 }
 
-[node name="BricksLayer" type="Area2D" parent="GameWorld"]
-position = Vector2(548, 199)
-scale = Vector2(1.00004, 1.00004)
-script = ExtResource("2_6n0ks")
-_arm_signals_channel = ExtResource("2_i4yd2")
+[node name="BricksContainer" type="Node2D" parent="GameWorld"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameWorld/BricksLayer"]
-shape = SubResource("RectangleShape2D_rqu5j")
+[node name="BricksLayerSpawner" type="Node" parent="GameWorld" node_paths=PackedStringArray("_bricks_container")]
+script = ExtResource("1_0jynu")
+_bricks_layers_signals_channel = ExtResource("4_w2fuv")
+_arm_signals_channel = ExtResource("2_i4yd2")
+_bricks_container = NodePath("../BricksContainer")
+_bricks_layer_tscn = ExtResource("5_1r27b")
+
+[node name="Building" parent="GameWorld" instance=ExtResource("6_vh5ow")]
+position = Vector2(576, 646)
 
 [node name="UserInput" type="Node" parent="."]
 
