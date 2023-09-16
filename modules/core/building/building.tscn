@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp8l8laql0p4t"]
+
+[ext_resource type="Script" path="res://modules/core/building/building.gd" id="1_yl2jr"]
+[ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="2_q3d1i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83ypw"]
+size = Vector2(300, 20)
+
+[node name="Building" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_yl2jr")
+_bricks_layers_signals_channel = ExtResource("2_q3d1i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_83ypw")
