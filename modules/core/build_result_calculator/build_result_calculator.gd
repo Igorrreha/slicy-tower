@@ -25,8 +25,6 @@ func _on_bricks_layer_landed(layer: BricksLayer) -> void:
 		
 		for brick in layer.bricks:
 			brick.paint(max_group_color)
-		
-		print("perfect!")
 	
 	_combo_calculator.calculate(layer.bricks)
 	_scores_storage.set_value("scores", _scores_storage.scores
@@ -38,4 +36,4 @@ func _calculate_building_accuracy(layer: BricksLayer) -> float:
 	var building_top_center_position = _building.top_layer_shape.global_position
 	var build_offset = abs(building_top_center_position.x - new_layer_center.x)
 	var max_offset = layer.collision_shape.shape.get_rect().size.x / 2
-	return 1.0 - build_offset / max_offset 
+	return 1.0 - build_offset / max_offset

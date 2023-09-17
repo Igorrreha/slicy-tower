@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://dega4k42ausjm"]
+
+[ext_resource type="Script" path="res://modules/ui/building_instability_bar/building_instability_bar.gd" id="1_e2osm"]
+[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_instability_storage/building_instability_storage.tres" id="2_63pjp"]
+
+[sub_resource type="Gradient" id="Gradient_y6mn5"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_w5bgq"]
+gradient = SubResource("Gradient_y6mn5")
+width = 1
+height = 1
+
+[sub_resource type="Gradient" id="Gradient_u0b4v"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_brov3"]
+gradient = SubResource("Gradient_u0b4v")
+width = 1
+
+[node name="BuildingInstabilityBar" type="TextureProgressBar"]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -100.0
+offset_right = 40.0
+offset_bottom = 100.0
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+max_value = 1.0
+step = 0.001
+value = 0.345
+fill_mode = 3
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_w5bgq")
+texture_progress = SubResource("GradientTexture1D_brov3")
+script = ExtResource("1_e2osm")
+_building_instability_storage = ExtResource("2_63pjp")
+metadata/_edit_use_anchors_ = true

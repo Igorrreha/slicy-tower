@@ -1,11 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp8l8laql0p4t"]
+[gd_scene load_steps=8 format=3 uid="uid://cp8l8laql0p4t"]
 
 [ext_resource type="Script" path="res://modules/core/building/building.gd" id="1_yl2jr"]
 [ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="2_q3d1i"]
+[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_instability_storage/building_instability_storage.tres" id="3_51ryo"]
+
+[sub_resource type="Curve" id="Curve_js877"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_l822o"]
 offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
+colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_20n1k"]
 gradient = SubResource("Gradient_l822o")
@@ -20,6 +25,8 @@ position = Vector2(0, 32)
 collision_mask = 0
 script = ExtResource("1_yl2jr")
 _bricks_layers_signals_channel = ExtResource("2_q3d1i")
+_layer_offset_impact_curve = SubResource("Curve_js877")
+_building_instability_storage = ExtResource("3_51ryo")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(6.02722e-06, -32)
