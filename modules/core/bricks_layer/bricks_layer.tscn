@@ -7,16 +7,27 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqu5j"]
 size = Vector2(300, 100)
 
-[node name="BricksLayer" type="CharacterBody2D"]
+[node name="BricksLayer" type="CharacterBody2D" node_paths=PackedStringArray("_bricks_slots")]
 position = Vector2(576, 199)
 scale = Vector2(1.00004, 1.00004)
 collision_layer = 0
 script = ExtResource("1_hjw13")
 _arm_signals_channel = ExtResource("2_3qw8a")
 _bricks_layers_signals_channel = ExtResource("3_tbccr")
+_bricks_slots = [NodePath("Bricks/BricksSlot"), NodePath("Bricks/BricksSlot2"), NodePath("Bricks/BricksSlot3")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rqu5j")
 
 [node name="ValidCollisionDetector" type="RayCast2D" parent="."]
 target_position = Vector2(0, 80)
+
+[node name="Bricks" type="Node2D" parent="."]
+
+[node name="BricksSlot" type="Node2D" parent="Bricks"]
+position = Vector2(-100, 0)
+
+[node name="BricksSlot2" type="Node2D" parent="Bricks"]
+
+[node name="BricksSlot3" type="Node2D" parent="Bricks"]
+position = Vector2(100, 0)

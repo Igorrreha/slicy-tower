@@ -13,11 +13,22 @@ enum State {
 @export var _fly_down_speed := 675.0
 @export var _arm_signals_channel: ArmSignalsChannel
 @export var _bricks_layers_signals_channel: BricksLayersSignalsChannel
+@export var _bricks_slots: Array[Node2D]
 
+var bricks: Array[Brick]
 var _cur_state: State = State.GRABBED
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var _valid_collision_detector: RayCast2D = $ValidCollisionDetector
+
+
+func setup(brick_1: Brick, brick_2: Brick, brick_3: Brick) -> void:
+	_bricks_slots[0].add_child(brick_1)
+	_bricks_slots[1].add_child(brick_2)
+	_bricks_slots[2].add_child(brick_3)
+	bricks.append(brick_1)
+	bricks.append(brick_2)
+	bricks.append(brick_3)
 
 
 func _ready() -> void:

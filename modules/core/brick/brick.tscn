@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://qfd8df631pbs"]
+
+[ext_resource type="Script" path="res://modules/core/brick/brick.gd" id="1_bx8cm"]
+
+[sub_resource type="Gradient" id="Gradient_l822o"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xcala"]
+gradient = SubResource("Gradient_l822o")
+width = 100
+height = 100
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lf3dc"]
+size = Vector2(100, 150)
+
+[node name="Brick" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_bx8cm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_xcala")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lf3dc")
