@@ -1,15 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://cp8l8laql0p4t"]
+[gd_scene load_steps=6 format=3 uid="uid://cp8l8laql0p4t"]
 
 [ext_resource type="Script" path="res://modules/core/building/building.gd" id="1_yl2jr"]
 [ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="2_q3d1i"]
 
+[sub_resource type="Gradient" id="Gradient_l822o"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_20n1k"]
+gradient = SubResource("Gradient_l822o")
+width = 100
+height = 100
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_83ypw"]
-size = Vector2(300, 20)
+size = Vector2(208, 64)
 
 [node name="Building" type="StaticBody2D"]
+position = Vector2(0, 32)
 collision_mask = 0
 script = ExtResource("1_yl2jr")
 _bricks_layers_signals_channel = ExtResource("2_q3d1i")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6.02722e-06, -32)
+scale = Vector2(2.08, 0.64)
+texture = SubResource("GradientTexture2D_20n1k")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32)
 shape = SubResource("RectangleShape2D_83ypw")

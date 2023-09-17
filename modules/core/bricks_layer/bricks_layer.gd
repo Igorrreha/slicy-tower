@@ -39,21 +39,25 @@ func _physics_process(delta: float) -> void:
 	if _cur_state != State.FALLING_DOWN:
 		return
 	
-	if is_on_floor():
-		if _valid_collision_detector.is_colliding():
-			_cur_state = State.LANDED
-			_bricks_layers_signals_channel.layer_landed.emit(self)
-		else:
-			_broke()
-	
 	velocity.y = _fly_down_speed
 	move_and_slide()
+	
+	if is_on_floor():
+		if _valid_collision_detector.is_colliding():
+			_land()
+		else:
+			_broke()
 
 
 func _broke() -> void:
 	_cur_state = State.BROKEN
 	_bricks_layers_signals_channel.layer_broken.emit(self)
 	queue_free()
+
+
+func _land() -> void:
+	_cur_state = State.LANDED
+	_bricks_layers_signals_channel.layer_landed.emit(self)
 
 
 func _on_grabber_relaxed() -> void:

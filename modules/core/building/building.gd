@@ -13,6 +13,9 @@ func _ready() -> void:
 
 
 func _append_layer(layer: BricksLayer) -> void:
-	layer.collision_shape.reparent(self)
+	var new_building_layer = layer.collision_shape.duplicate(true) as CollisionShape2D
+	add_child(new_building_layer)
+	new_building_layer.global_position = layer.collision_shape.global_position
+	new_building_layer.disabled = false
 	top_layer_shape = layer.collision_shape
 	top_layer = layer

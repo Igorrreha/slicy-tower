@@ -20,9 +20,11 @@ func _on_bricks_layer_landed(layer: BricksLayer) -> void:
 		layer.global_position.x = _building.top_layer_shape.global_position.x
 		
 		var max_group_color = _combo_calculator.get_max_group_color_or_null()
-		if max_group_color:
-			for brick in layer.bricks:
-				brick.paint(max_group_color)
+		if not max_group_color:
+			max_group_color = layer.bricks[0].color
+		
+		for brick in layer.bricks:
+			brick.paint(max_group_color)
 		
 		print("perfect!")
 	

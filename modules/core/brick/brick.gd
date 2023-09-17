@@ -13,7 +13,7 @@ func paint(color: Color) -> void:
 	gradient.colors = [color]
 	
 	var gradient_texture = GradientTexture2D.new()
-	gradient_texture.width = 100
-	gradient_texture.height = 100
+	gradient_texture.width = 70
+	gradient_texture.height = 70
 	gradient_texture.gradient = gradient
 	$Sprite2D.texture = gradient_texture
