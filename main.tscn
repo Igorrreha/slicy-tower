@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bufpahaehp068"]
+[gd_scene load_steps=17 format=3 uid="uid://bufpahaehp068"]
 
 [ext_resource type="Script" path="res://modules/core/bricks_layer_spawner/bricks_layer_spawner.gd" id="1_0jynu"]
 [ext_resource type="Script" path="res://modules/core/arm/arm.gd" id="1_ohxi4"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://cp8l8laql0p4t" path="res://modules/core/building/building.tscn" id="6_vh5ow"]
 [ext_resource type="Script" path="res://modules/core/build_result_calculator/build_result_calculator.gd" id="8_60ax8"]
 [ext_resource type="Script" path="res://modules/core/build_result_calculator/bricks_combo_calculator.gd" id="8_mrlec"]
+[ext_resource type="Resource" uid="uid://dgoj1x5uy385j" path="res://modules/core/scores_storage/scores_storage.tres" id="9_xuku3"]
+[ext_resource type="PackedScene" uid="uid://7cnwli2cdtqa" path="res://modules/ui/scores_label/scores_bar.tscn" id="13_08v8f"]
 
 [sub_resource type="Animation" id="Animation_4n6bn"]
 length = 0.001
@@ -91,6 +93,7 @@ script = ExtResource("8_60ax8")
 _combo_calculator = NodePath("BricksComboCalculator")
 _bricks_layer_signals_channel = ExtResource("4_w2fuv")
 _building = NodePath("..")
+_scores_storage = ExtResource("9_xuku3")
 
 [node name="BricksComboCalculator" type="Node" parent="GameWorld/Building/BuildResultCalculator"]
 script = ExtResource("8_mrlec")
@@ -104,5 +107,19 @@ _signals_channel = ExtResource("2_i4yd2")
 [node name="RelaxGrabberActionHandler" type="Node" parent="UserInput/ChannelSignalsTransmitter"]
 script = ExtResource("5_rix7c")
 _action = &"relax_grabber"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoresBar" parent="CanvasLayer/UI" instance=ExtResource("13_08v8f")]
+layout_mode = 1
+offset_left = -64.0
 
 [connection signal="action_pressed" from="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" to="UserInput/ChannelSignalsTransmitter" method="transmit" binds= [&"grabber_relax_requested"]]

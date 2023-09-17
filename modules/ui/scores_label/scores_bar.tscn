@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://7cnwli2cdtqa"]
+
+[ext_resource type="Script" path="res://modules/ui/scores_label/scores_label.gd" id="1_xuych"]
+[ext_resource type="Resource" uid="uid://dgoj1x5uy385j" path="res://modules/core/scores_storage/scores_storage.tres" id="2_rd5ri"]
+
+[node name="ScoresBar" type="HBoxContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+text = "Scores: "
+
+[node name="ScoresLabel" type="Label" parent="."]
+layout_mode = 2
+script = ExtResource("1_xuych")
+_scores_storage = ExtResource("2_rd5ri")

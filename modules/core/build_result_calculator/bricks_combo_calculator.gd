@@ -2,12 +2,12 @@ class_name BricksComboCalculator
 extends Node
 
 
-var bricks_groups: Array[BricksGroup]
+var _bricks_groups: Array[BricksGroup]
 
 
 func get_max_group_color_or_null() -> Variant:
 	var max_group: BricksGroup
-	for group in bricks_groups:
+	for group in _bricks_groups:
 		if not max_group or group.size > max_group.size:
 			max_group = group
 	
@@ -17,11 +17,16 @@ func get_max_group_color_or_null() -> Variant:
 	return null
 
 
+func get_groups_sizes_sum() -> int:
+	return _bricks_groups.reduce(func(sum: int, group: BricksGroup):
+		return sum + group.size, 0)
+
+
 func calculate(bricks_row: Array[Brick]) -> void:
 	var clusters = _split_row_to_clusters(bricks_row)
 	
 	var continued_groups: Array[BricksGroup]
-	for group in bricks_groups:
+	for group in _bricks_groups:
 		var still_active: bool
 		
 		for cluster in clusters:
@@ -65,7 +70,7 @@ func calculate(bricks_row: Array[Brick]) -> void:
 		new_group.size = group_size
 		new_bricks_groups.append(new_group)
 	
-	bricks_groups = new_bricks_groups
+	_bricks_groups = new_bricks_groups
 
 
 func _split_row_to_clusters(row: Array[Brick]) -> Array[BricksRowCluster]:

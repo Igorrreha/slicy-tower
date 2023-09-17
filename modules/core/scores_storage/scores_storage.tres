@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="ScoresStorage" load_steps=2 format=3 uid="uid://dgoj1x5uy385j"]
+
+[ext_resource type="Script" path="res://modules/core/scores_storage/scores_storage.gd" id="1_goylg"]
+
+[resource]
+script = ExtResource("1_goylg")
