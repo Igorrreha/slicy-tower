@@ -1,0 +1,177 @@
+[gd_scene load_steps=23 format=3 uid="uid://eddvhnhagisi"]
+
+[ext_resource type="Script" path="res://modules/core/camera/camera.gd" id="1_b8w67"]
+[ext_resource type="Script" path="res://modules/core/game_world/game_world.gd" id="1_rpn7r"]
+[ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="2_iduyu"]
+[ext_resource type="Script" path="res://modules/core/arm/arm.gd" id="3_sibdv"]
+[ext_resource type="Resource" uid="uid://boape4xjb0g1n" path="res://modules/core/arm/arm_signals_channel.tres" id="4_x8jjm"]
+[ext_resource type="Script" path="res://modules/core/bricks_layer_spawner/bricks_layer_spawner.gd" id="5_xur8v"]
+[ext_resource type="PackedScene" uid="uid://bi4w2m7nrr68q" path="res://modules/core/bricks_layer/bricks_layer.tscn" id="6_cdxhr"]
+[ext_resource type="PackedScene" uid="uid://qfd8df631pbs" path="res://modules/core/brick/brick.tscn" id="7_aaiye"]
+[ext_resource type="PackedScene" uid="uid://cp8l8laql0p4t" path="res://modules/core/building/building.tscn" id="8_osdyy"]
+[ext_resource type="Script" path="res://modules/visuals/building_instability_visualizer/building_instability_visualizer.gd" id="9_i55q6"]
+[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_instability_storage/building_instability_storage.tres" id="10_4nmoe"]
+[ext_resource type="Script" path="res://modules/core/build_result_calculator/build_result_calculator.gd" id="11_wghi5"]
+[ext_resource type="Resource" uid="uid://dgoj1x5uy385j" path="res://modules/core/scores_storage/scores_storage.tres" id="12_868d7"]
+[ext_resource type="Script" path="res://modules/core/build_result_calculator/bricks_combo_calculator.gd" id="13_qcp5j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rerr"]
+size = Vector2(2000, 20)
+
+[sub_resource type="Animation" id="Animation_4n6bn"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_pat8y"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-0.589, -0.25, 0, 0.5, 0, 0.589, -0.5, 0, 0.5, 0, -0.589, -0.5, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 1, 2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hycj0"]
+_data = {
+"RESET": SubResource("Animation_4n6bn"),
+"idle": SubResource("Animation_pat8y")
+}
+
+[sub_resource type="Animation" id="Animation_ovmf3"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InstabilityVisualizer:_loop_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_dqn2u"]
+resource_name = "idle"
+length = 2.2
+loop_mode = 2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InstabilityVisualizer:_loop_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2.2)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_02obf"]
+_data = {
+"RESET": SubResource("Animation_ovmf3"),
+"idle": SubResource("Animation_dqn2u")
+}
+
+[sub_resource type="Curve" id="Curve_majlw"]
+min_value = -1.0
+bake_resolution = 1000
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 4.59782, 4.59782, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="GameWorld" type="Node2D"]
+script = ExtResource("1_rpn7r")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+script = ExtResource("1_b8w67")
+_bricks_layers_signals_channel = ExtResource("2_iduyu")
+
+[node name="OffsetToBuildingTop" type="Marker2D" parent="Camera"]
+position = Vector2(0, 124)
+gizmo_extents = 50.0
+
+[node name="DeadZone" type="Area2D" parent="Camera"]
+position = Vector2(0, 388)
+collision_layer = 0
+collision_mask = 8
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/DeadZone"]
+shape = SubResource("RectangleShape2D_8rerr")
+
+[node name="Arm" type="Node2D" parent="Camera"]
+position = Vector2(0, -580)
+script = ExtResource("3_sibdv")
+_signals_channel = ExtResource("4_x8jjm")
+
+[node name="GrabPoint" type="Node2D" parent="Camera/Arm"]
+unique_name_in_owner = true
+position = Vector2(0, 384)
+
+[node name="Grabber" type="RemoteTransform2D" parent="Camera/Arm/GrabPoint"]
+unique_name_in_owner = true
+update_rotation = false
+update_scale = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/Arm"]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_hycj0")
+}
+
+[node name="BricksLayersContainer" type="Node2D" parent="."]
+
+[node name="BricksLayerSpawner" type="Node" parent="." node_paths=PackedStringArray("_bricks_layers_container")]
+script = ExtResource("5_xur8v")
+_bricks_layers_signals_channel = ExtResource("2_iduyu")
+_arm_signals_channel = ExtResource("4_x8jjm")
+_bricks_layers_container = NodePath("../BricksLayersContainer")
+_bricks_layer_tscn = ExtResource("6_cdxhr")
+_brick_tscn = ExtResource("7_aaiye")
+_brick_colors = PackedColorArray(0.305882, 0.8, 0.764706, 1, 0.964706, 0.996078, 0.964706, 1, 0.996078, 0.419608, 0.419608, 1)
+
+[node name="Building" parent="." instance=ExtResource("8_osdyy")]
+position = Vector2(576, 648)
+
+[node name="InstabilityVisualizer" type="AnimationPlayer" parent="Building" node_paths=PackedStringArray("_building")]
+autoplay = "idle"
+libraries = {
+"": SubResource("AnimationLibrary_02obf")
+}
+script = ExtResource("9_i55q6")
+_building = NodePath("..")
+_building_instability_storage = ExtResource("10_4nmoe")
+_loop_offset_curve = SubResource("Curve_majlw")
+_loop_position = 0.0
+
+[node name="BuildResultCalculator" type="Node" parent="Building" node_paths=PackedStringArray("_combo_calculator", "_building")]
+script = ExtResource("11_wghi5")
+_combo_calculator = NodePath("BricksComboCalculator")
+_bricks_layer_signals_channel = ExtResource("2_iduyu")
+_building = NodePath("..")
+_scores_storage = ExtResource("12_868d7")
+
+[node name="BricksComboCalculator" type="Node" parent="Building/BuildResultCalculator"]
+script = ExtResource("13_qcp5j")
+
+[connection signal="body_entered" from="Camera/DeadZone" to="." method="end_the_game" unbinds=1]

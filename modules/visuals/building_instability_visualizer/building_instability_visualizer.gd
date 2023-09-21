@@ -15,6 +15,10 @@ func _ready() -> void:
 	_building_instability_storage.bind("instability", _on_building_instability_updated)
 
 
+func _exit_tree() -> void:
+	_building_instability_storage.remove_callback("instability", _on_building_instability_updated)
+
+
 func _on_building_instability_updated() -> void:
 #	var max_offset = (_loop_offset_curve.sample(1.0)
 #		* _delta_offset * _building_instability_storage.instability) * 2

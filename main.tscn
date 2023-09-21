@@ -1,170 +1,24 @@
-[gd_scene load_steps=25 format=3 uid="uid://bufpahaehp068"]
+[gd_scene load_steps=10 format=3 uid="uid://bufpahaehp068"]
 
-[ext_resource type="Script" path="res://modules/core/bricks_layer_spawner/bricks_layer_spawner.gd" id="1_0jynu"]
-[ext_resource type="Script" path="res://modules/core/arm/arm.gd" id="1_ohxi4"]
+[ext_resource type="PackedScene" uid="uid://eddvhnhagisi" path="res://modules/core/game_world/game_world.tscn" id="1_nyt2w"]
+[ext_resource type="Script" path="res://main.gd" id="1_s8tiu"]
 [ext_resource type="Resource" uid="uid://boape4xjb0g1n" path="res://modules/core/arm/arm_signals_channel.tres" id="2_i4yd2"]
 [ext_resource type="Script" path="res://modules/common/channel_signals_trasmitter/channel_signals_transmitter.gd" id="4_3bqqh"]
-[ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="4_w2fuv"]
-[ext_resource type="PackedScene" uid="uid://bi4w2m7nrr68q" path="res://modules/core/bricks_layer/bricks_layer.tscn" id="5_1r27b"]
 [ext_resource type="Script" path="res://modules/common/action_press_handler/action_press_handler.gd" id="5_rix7c"]
-[ext_resource type="PackedScene" uid="uid://qfd8df631pbs" path="res://modules/core/brick/brick.tscn" id="6_21cq1"]
-[ext_resource type="PackedScene" uid="uid://cp8l8laql0p4t" path="res://modules/core/building/building.tscn" id="6_vh5ow"]
-[ext_resource type="Script" path="res://modules/core/camera/camera.gd" id="8_0adol"]
-[ext_resource type="Script" path="res://modules/core/build_result_calculator/build_result_calculator.gd" id="8_60ax8"]
-[ext_resource type="Script" path="res://modules/core/build_result_calculator/bricks_combo_calculator.gd" id="8_mrlec"]
-[ext_resource type="Script" path="res://modules/visuals/building_instability_visualizer.gd" id="9_msyc5"]
 [ext_resource type="Resource" uid="uid://dgoj1x5uy385j" path="res://modules/core/scores_storage/scores_storage.tres" id="9_xuku3"]
 [ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_instability_storage/building_instability_storage.tres" id="10_0abie"]
 [ext_resource type="PackedScene" uid="uid://7cnwli2cdtqa" path="res://modules/ui/scores_label/scores_bar.tscn" id="13_08v8f"]
 [ext_resource type="PackedScene" uid="uid://dega4k42ausjm" path="res://modules/ui/building_instability_bar/building_instability_bar.tscn" id="15_4kdcs"]
 
-[sub_resource type="Animation" id="Animation_4n6bn"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_pat8y"]
-resource_name = "idle"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0, 0),
-"points": PackedFloat32Array(-0.589, -0.25, 0, 0.5, 0, 0.589, -0.5, 0, 0.5, 0, -0.589, -0.5, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 1, 2)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hycj0"]
-_data = {
-"RESET": SubResource("Animation_4n6bn"),
-"idle": SubResource("Animation_pat8y")
-}
-
-[sub_resource type="Animation" id="Animation_ovmf3"]
-length = 0.001
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("InstabilityVisualizer:_loop_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_dqn2u"]
-resource_name = "idle"
-length = 2.2
-loop_mode = 2
-tracks/0/type = "bezier"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("InstabilityVisualizer:_loop_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0),
-"times": PackedFloat32Array(0, 2.2)
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_02obf"]
-_data = {
-"RESET": SubResource("Animation_ovmf3"),
-"idle": SubResource("Animation_dqn2u")
-}
-
-[sub_resource type="Curve" id="Curve_majlw"]
-min_value = -1.0
-bake_resolution = 1000
-_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(0.5, 0), 4.59782, 4.59782, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
-
 [node name="Main" type="Node"]
-
-[node name="GameWorld" type="Node2D" parent="."]
-
-[node name="Camera" type="Camera2D" parent="GameWorld"]
-position = Vector2(576, 324)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-script = ExtResource("8_0adol")
-_bricks_layers_signals_channel = ExtResource("4_w2fuv")
-
-[node name="OffsetToBuildingTop" type="Marker2D" parent="GameWorld/Camera"]
-position = Vector2(0, 124)
-gizmo_extents = 50.0
-
-[node name="Arm" type="Node2D" parent="GameWorld/Camera"]
-position = Vector2(0, -580)
-script = ExtResource("1_ohxi4")
-_signals_channel = ExtResource("2_i4yd2")
-
-[node name="GrabPoint" type="Node2D" parent="GameWorld/Camera/Arm"]
-unique_name_in_owner = true
-position = Vector2(0, 384)
-
-[node name="Grabber" type="RemoteTransform2D" parent="GameWorld/Camera/Arm/GrabPoint"]
-unique_name_in_owner = true
-update_rotation = false
-update_scale = false
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GameWorld/Camera/Arm"]
-autoplay = "idle"
-libraries = {
-"": SubResource("AnimationLibrary_hycj0")
-}
-
-[node name="BricksLayersContainer" type="Node2D" parent="GameWorld"]
-
-[node name="BricksLayerSpawner" type="Node" parent="GameWorld" node_paths=PackedStringArray("_bricks_layers_container")]
-script = ExtResource("1_0jynu")
-_bricks_layers_signals_channel = ExtResource("4_w2fuv")
-_arm_signals_channel = ExtResource("2_i4yd2")
-_bricks_layers_container = NodePath("../BricksLayersContainer")
-_bricks_layer_tscn = ExtResource("5_1r27b")
-_brick_tscn = ExtResource("6_21cq1")
-_brick_colors = PackedColorArray(0.304688, 0.800781, 0.765625, 1, 0.964844, 0.996094, 0.964844, 1, 0.996094, 0.417969, 0.417969, 1)
-
-[node name="Building" parent="GameWorld" instance=ExtResource("6_vh5ow")]
-position = Vector2(576, 648)
-
-[node name="InstabilityVisualizer" type="AnimationPlayer" parent="GameWorld/Building" node_paths=PackedStringArray("_building")]
-autoplay = "idle"
-libraries = {
-"": SubResource("AnimationLibrary_02obf")
-}
-script = ExtResource("9_msyc5")
-_building = NodePath("..")
-_building_instability_storage = ExtResource("10_0abie")
-_loop_offset_curve = SubResource("Curve_majlw")
-_loop_position = 0.0
-
-[node name="BuildResultCalculator" type="Node" parent="GameWorld/Building" node_paths=PackedStringArray("_combo_calculator", "_building")]
-script = ExtResource("8_60ax8")
-_combo_calculator = NodePath("BricksComboCalculator")
-_bricks_layer_signals_channel = ExtResource("4_w2fuv")
-_building = NodePath("..")
+script = ExtResource("1_s8tiu")
+_game_world_tscn = ExtResource("1_nyt2w")
 _scores_storage = ExtResource("9_xuku3")
+_building_instability_storage = ExtResource("10_0abie")
 
-[node name="BricksComboCalculator" type="Node" parent="GameWorld/Building/BuildResultCalculator"]
-script = ExtResource("8_mrlec")
+[node name="GameWorldContainer" type="Node" parent="."]
+
+[node name="GameWorld" parent="GameWorldContainer" instance=ExtResource("1_nyt2w")]
 
 [node name="UserInput" type="Node" parent="."]
 
@@ -186,15 +40,126 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ScoresBar" parent="CanvasLayer/UI" instance=ExtResource("13_08v8f")]
+[node name="InGame" type="Control" parent="CanvasLayer/UI"]
 layout_mode = 1
-offset_left = -64.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="BuildingInstabilityBar" parent="CanvasLayer/UI" instance=ExtResource("15_4kdcs")]
+[node name="ScoresBar" parent="CanvasLayer/UI/InGame" instance=ExtResource("13_08v8f")]
+layout_mode = 1
+offset_left = -152.0
+offset_top = 16.0
+offset_right = -23.0
+offset_bottom = 82.0
+
+[node name="BuildingInstabilityBar" parent="CanvasLayer/UI/InGame" instance=ExtResource("15_4kdcs")]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 24.0
 offset_right = 64.0
 value = 0.0
 
+[node name="MainMenu" type="PanelContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = 28.0
+offset_right = 128.0
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/UI/MainMenu"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Играть!"
+flat = true
+
+[node name="TutorialDesciption" type="Control" parent="CanvasLayer/UI/MainMenu"]
+layout_mode = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/UI/MainMenu/TutorialDesciption"]
+layout_mode = 2
+offset_left = -384.0
+offset_top = -168.0
+offset_right = 296.0
+offset_bottom = -104.0
+text = "<- Шкала нестабильности башни
+"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="CanvasLayer/UI/MainMenu/TutorialDesciption"]
+layout_mode = 2
+offset_left = -384.0
+offset_top = -104.0
+offset_right = 296.0
+offset_bottom = -40.0
+text = "Заполнится - проиграешь!"
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="CanvasLayer/UI/MainMenu/TutorialDesciption"]
+layout_mode = 2
+offset_left = -376.0
+offset_right = -40.0
+offset_bottom = 224.0
+text = "Старайся ставить блоки как можно ровнее"
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="CanvasLayer/UI/MainMenu/TutorialDesciption"]
+layout_mode = 2
+offset_left = 248.0
+offset_top = -232.0
+offset_right = 672.0
+offset_bottom = 96.0
+text = "Очки даются за комбинации блоков.
+Длиннее комбинация - больше очков"
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="CanvasLayer/UI/MainMenu/TutorialDesciption"]
+layout_mode = 2
+offset_left = 464.0
+offset_top = -272.0
+offset_right = 552.0
+offset_bottom = -200.0
+grow_horizontal = 0
+rotation = -0.758889
+text = "->"
+
+[node name="GameOverMenu" type="PanelContainer" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = 28.0
+offset_right = 128.0
+offset_bottom = 173.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/UI/GameOverMenu"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Ещё попытка!"
+flat = true
+
+[connection signal="game_ended" from="." to="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" method="deactivate"]
+[connection signal="game_ended" from="." to="CanvasLayer/UI/GameOverMenu" method="show"]
+[connection signal="game_started" from="." to="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" method="activate"]
+[connection signal="game_started" from="." to="CanvasLayer/UI/MainMenu" method="hide"]
+[connection signal="game_started" from="." to="CanvasLayer/UI/GameOverMenu" method="hide"]
 [connection signal="action_pressed" from="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" to="UserInput/ChannelSignalsTransmitter" method="transmit" binds= [&"grabber_relax_requested"]]
+[connection signal="filled" from="CanvasLayer/UI/InGame/BuildingInstabilityBar" to="." method="end_game"]
+[connection signal="pressed" from="CanvasLayer/UI/MainMenu/PlayButton" to="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" method="activate"]
+[connection signal="pressed" from="CanvasLayer/UI/MainMenu/PlayButton" to="CanvasLayer/UI/MainMenu" method="hide"]
+[connection signal="pressed" from="CanvasLayer/UI/GameOverMenu/PlayButton" to="." method="restart_game"]

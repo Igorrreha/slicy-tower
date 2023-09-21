@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://8m0mjeokanvb"]
+
+[ext_resource type="Texture2D" uid="uid://b6pc35xk2b2qp" path="res://modules/ui/panel/img/panel_back.png" id="1_xw36h"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yglkq"]
+texture = ExtResource("1_xw36h")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[resource]
+Button/font_sizes/font_size = 70
+Label/font_sizes/font_size = 50
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_yglkq")
+RichTextLabel/font_sizes/normal_font_size = 50

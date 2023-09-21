@@ -13,16 +13,23 @@ config_version=5
 config/name="Slicy Tower"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://modules/core/brick/img/red_brick.png"
 
 [display]
 
+window/size/viewport_width=630
+window/size/viewport_height=500
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/bit_of_reactivity/plugin.cfg")
+
+[gui]
+
+theme/custom="res://modules/visuals/common_theme/common_theme.tres"
+theme/custom_font="res://modules/visuals/common_theme/caveat_medium.ttf"
 
 [input]
 
@@ -36,3 +43,4 @@ relax_grabber={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)

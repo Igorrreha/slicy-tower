@@ -1,0 +1,42 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://b8fx1d8bf5vu6"
+path="res://.godot/imported/caveat_medium.ttf-597b4a31723016ddf129b86d49e1139c.fontdata"
+
+[deps]
+
+source_file="res://modules/visuals/common_theme/caveat_medium.ttf"
+dest_files=["res://.godot/imported/caveat_medium.ttf-597b4a31723016ddf129b86d49e1139c.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=1
+generate_mipmaps=false
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=true
+force_autohinter=false
+hinting=1
+subpixel_positioning=1
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=true
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "default",
+"size": Vector2i(32, 0),
+"variation_embolden": 0.0
+}]
+language_support={
+"en": true,
+"ru": true
+}
+script_support={}
+opentype_features={}

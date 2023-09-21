@@ -1,19 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://bi4w2m7nrr68q"]
+[gd_scene load_steps=6 format=3 uid="uid://bi4w2m7nrr68q"]
 
 [ext_resource type="Script" path="res://modules/core/bricks_layer/bricks_layer.gd" id="1_hjw13"]
 [ext_resource type="Resource" uid="uid://boape4xjb0g1n" path="res://modules/core/arm/arm_signals_channel.tres" id="2_3qw8a"]
 [ext_resource type="Resource" uid="uid://diy8hwfovbw8i" path="res://modules/core/bricks_layer/bricks_layers_signals_channel.tres" id="3_tbccr"]
+[ext_resource type="Texture2D" uid="uid://dw73f7d470e5" path="res://modules/core/bricks_layer/img/bricks_layer.png" id="4_u18eq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqu5j"]
 size = Vector2(210, 70)
 
 [node name="BricksLayer" type="CharacterBody2D" node_paths=PackedStringArray("_bricks_slots")]
 position = Vector2(576, 199)
-collision_layer = 0
+collision_layer = 8
 script = ExtResource("1_hjw13")
 _arm_signals_channel = ExtResource("2_3qw8a")
 _bricks_layers_signals_channel = ExtResource("3_tbccr")
 _bricks_slots = [NodePath("Bricks/BricksSlot"), NodePath("Bricks/BricksSlot2"), NodePath("Bricks/BricksSlot3")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("4_u18eq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rqu5j")

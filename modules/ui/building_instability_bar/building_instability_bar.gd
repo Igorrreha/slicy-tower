@@ -1,6 +1,9 @@
 extends TextureProgressBar
 
 
+signal filled
+
+
 @export var _building_instability_storage: BuildingInstabilityStorage
 
 
@@ -10,3 +13,5 @@ func _ready() -> void:
 
 func _on_building_instability_updated() -> void:
 	value = _building_instability_storage.instability
+	if value >= max_value:
+		filled.emit()

@@ -16,6 +16,11 @@ func _ready() -> void:
 	_signals_channel.grabber_grab_requested.connect(_grab_object)
 
 
+func _exit_tree() -> void:
+	_signals_channel.grabber_relax_requested.disconnect(_relax_grabber)
+	_signals_channel.grabber_grab_requested.disconnect(_grab_object)
+
+
 func _draw() -> void:
 	draw_line(Vector2.ZERO, _grab_point.position, Color.TAN, 10)
 

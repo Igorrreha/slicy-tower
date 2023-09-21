@@ -35,6 +35,11 @@ func _ready() -> void:
 	_arm_signals_channel.grabber_relaxed.connect(_on_grabber_relaxed)
 
 
+func _exit_tree() -> void:
+	if _arm_signals_channel.grabber_relaxed.is_connected(_on_grabber_relaxed):
+		_arm_signals_channel.grabber_relaxed.disconnect(_on_grabber_relaxed)
+
+
 func _physics_process(delta: float) -> void:
 	if _cur_state != State.FALLING_DOWN:
 		return
@@ -43,6 +48,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	if is_on_floor():
+		set_collision_layer_value(4, false) # remove this shit
+		set_collision_layer_value(3, false) # remove this shit
 		if _valid_collision_detector.is_colliding():
 			_land()
 		else:

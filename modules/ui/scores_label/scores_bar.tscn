@@ -13,9 +13,10 @@ grow_horizontal = 0
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 2
-text = "Scores: "
+text = "Очки: "
 
 [node name="ScoresLabel" type="Label" parent="."]
 layout_mode = 2
+text = "0"
 script = ExtResource("1_xuych")
 _scores_storage = ExtResource("2_rd5ri")

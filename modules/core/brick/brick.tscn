@@ -1,15 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://qfd8df631pbs"]
+[gd_scene load_steps=6 format=3 uid="uid://qfd8df631pbs"]
 
 [ext_resource type="Script" path="res://modules/core/brick/brick.gd" id="1_bx8cm"]
-
-[sub_resource type="Gradient" id="Gradient_3tae7"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_xcala"]
-gradient = SubResource("Gradient_3tae7")
-width = 70
-height = 70
+[ext_resource type="Texture2D" uid="uid://1enwt5nsffg4" path="res://modules/core/brick/img/blue_brick.png" id="2_vccq0"]
+[ext_resource type="Texture2D" uid="uid://v1x2okpkk56t" path="res://modules/core/brick/img/white_brick.png" id="3_am844"]
+[ext_resource type="Texture2D" uid="uid://dnjthevc0twd2" path="res://modules/core/brick/img/red_brick.png" id="4_mdlhu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lf3dc"]
 size = Vector2(70, 80)
@@ -18,9 +12,13 @@ size = Vector2(70, 80)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_bx8cm")
+_textures_by_color = {
+Color(0.305882, 0.8, 0.764706, 1): ExtResource("2_vccq0"),
+Color(0.964706, 0.996078, 0.964706, 1): ExtResource("3_am844"),
+Color(0.996078, 0.419608, 0.419608, 1): ExtResource("4_mdlhu")
+}
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("GradientTexture2D_xcala")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_lf3dc")

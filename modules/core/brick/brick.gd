@@ -2,18 +2,16 @@ class_name Brick
 extends Area2D
 
 
-var color: Color 
+@export var _textures_by_color: Dictionary
+var color: Color
+
+@onready var _sprite: Sprite2D = $Sprite2D
 
 
 func paint(color: Color) -> void:
+	if not _sprite:
+		_sprite = $Sprite2D
+	
 	self.color = color
-	
-	var gradient = Gradient.new()
-	gradient.offsets = [0]
-	gradient.colors = [color]
-	
-	var gradient_texture = GradientTexture2D.new()
-	gradient_texture.width = 70
-	gradient_texture.height = 70
-	gradient_texture.gradient = gradient
-	$Sprite2D.texture = gradient_texture
+	_sprite.texture = _textures_by_color[color]
+	_sprite.scale = Vector2(1, 1) * 70.0 / _sprite.texture.get_width()
