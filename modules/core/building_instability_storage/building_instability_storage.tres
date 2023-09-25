@@ -1,6 +1,0 @@
-[gd_resource type="Resource" script_class="BuildingInstabilityStorage" load_steps=2 format=3 uid="uid://c2pyc7oggmixr"]
-
-[ext_resource type="Script" path="res://modules/core/building_instability_storage/building_instability_storage.gd" id="1_sy6jl"]
-
-[resource]
-script = ExtResource("1_sy6jl")

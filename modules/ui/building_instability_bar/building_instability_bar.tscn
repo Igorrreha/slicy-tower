@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dega4k42ausjm"]
 
 [ext_resource type="Script" path="res://modules/ui/building_instability_bar/building_instability_bar.gd" id="1_e2osm"]
-[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_instability_storage/building_instability_storage.tres" id="2_63pjp"]
+[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_state/building_state.tres" id="2_63pjp"]
 
 [sub_resource type="Gradient" id="Gradient_y6mn5"]
 offsets = PackedFloat32Array(0)

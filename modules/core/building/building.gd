@@ -7,7 +7,7 @@ extends StaticBody2D
 @export var _instability_multiplier := 0.3
 @export var _instability_per_layer := 0.05
 
-@export var _building_instability_storage: BuildingInstabilityStorage
+@export var _state: BuildingState
 
 var _layers_on_basement_count := 0
 
@@ -16,7 +16,6 @@ var _layers_on_basement_count := 0
 
 @onready var _basement_position: Vector2 = top_layer_shape.position
 @onready var _basement_width: float = top_layer_shape.shape.get_rect().size.x
-@onready var _balance := 0.0
 
 
 func _ready() -> void:
@@ -35,7 +34,7 @@ func _append_layer(layer: BricksLayer) -> void:
 	_layers_on_basement_count += 1
 	
 	_apply_top_layer_balance_impact()
-	_building_instability_storage.set_value("instability", abs(_balance)
+	_state.set_value("instability", abs(_state.balance)
 		+ _layers_on_basement_count * _instability_per_layer)
 
 
@@ -44,4 +43,4 @@ func _apply_top_layer_balance_impact() -> void:
 	var offset = (_basement_position.x - top_layer_relative_position.x) / _basement_width
 	var impact_force = _layer_offset_impact_curve.sample(abs(offset) * _instability_multiplier)
 	
-	_balance += impact_force if offset > 0 else -impact_force
+	_state.set_value("balance", _state.balance + (impact_force if offset < 0 else -impact_force))

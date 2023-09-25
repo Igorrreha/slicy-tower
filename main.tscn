@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bufpahaehp068"]
+[gd_scene load_steps=26 format=3 uid="uid://bufpahaehp068"]
 
 [ext_resource type="Script" path="res://modules/core/bricks_layer_spawner/bricks_layer_spawner.gd" id="1_0jynu"]
 [ext_resource type="Script" path="res://modules/core/arm/arm.gd" id="1_ohxi4"]
@@ -14,9 +14,10 @@
 [ext_resource type="Script" path="res://modules/core/build_result_calculator/bricks_combo_calculator.gd" id="8_mrlec"]
 [ext_resource type="Script" path="res://modules/visuals/building_instability_visualizer.gd" id="9_msyc5"]
 [ext_resource type="Resource" uid="uid://dgoj1x5uy385j" path="res://modules/core/scores_storage/scores_storage.tres" id="9_xuku3"]
-[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_instability_storage/building_instability_storage.tres" id="10_0abie"]
+[ext_resource type="Resource" uid="uid://c2pyc7oggmixr" path="res://modules/core/building_state/building_state.tres" id="10_0abie"]
 [ext_resource type="PackedScene" uid="uid://7cnwli2cdtqa" path="res://modules/ui/scores_label/scores_bar.tscn" id="13_08v8f"]
 [ext_resource type="PackedScene" uid="uid://dega4k42ausjm" path="res://modules/ui/building_instability_bar/building_instability_bar.tscn" id="15_4kdcs"]
+[ext_resource type="PackedScene" uid="uid://8awfu0w3n6x2" path="res://modules/ui/building_balance_slider/building_balance_slider.tscn" id="18_jksqm"]
 
 [sub_resource type="Animation" id="Animation_4n6bn"]
 length = 0.001
@@ -141,6 +142,7 @@ _brick_colors = PackedColorArray(0.304688, 0.800781, 0.765625, 1, 0.964844, 0.99
 
 [node name="Building" parent="GameWorld" instance=ExtResource("6_vh5ow")]
 position = Vector2(576, 648)
+_state = ExtResource("10_0abie")
 
 [node name="InstabilityVisualizer" type="AnimationPlayer" parent="GameWorld/Building" node_paths=PackedStringArray("_building")]
 libraries = {
@@ -148,7 +150,7 @@ libraries = {
 }
 script = ExtResource("9_msyc5")
 _building = NodePath("..")
-_building_instability_storage = ExtResource("10_0abie")
+_building_state = ExtResource("10_0abie")
 _loop_offset_curve = SubResource("Curve_reygb")
 _loop_position = 0.0
 
@@ -192,5 +194,14 @@ anchors_preset = -1
 offset_left = 24.0
 offset_right = 64.0
 value = 0.0
+_building_state = ExtResource("10_0abie")
+
+[node name="BuildingBalanceSlider" parent="CanvasLayer/UI" instance=ExtResource("18_jksqm")]
+layout_mode = 0
+offset_left = 52.0
+offset_top = 60.0
+offset_right = 298.0
+offset_bottom = 76.0
+_building_state = ExtResource("10_0abie")
 
 [connection signal="action_pressed" from="UserInput/ChannelSignalsTransmitter/RelaxGrabberActionHandler" to="UserInput/ChannelSignalsTransmitter" method="transmit" binds= [&"grabber_relax_requested"]]

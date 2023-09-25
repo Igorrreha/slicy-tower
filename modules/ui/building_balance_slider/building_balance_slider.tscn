@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://8awfu0w3n6x2"]
+
+[ext_resource type="Script" path="res://modules/ui/building_balance_slider/building_balance_slider.gd" id="1_1wfpg"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_t13an"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x65c8"]
+width = 32
+height = 32
+noise = SubResource("FastNoiseLite_t13an")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_35wx7"]
+expand_margin_top = 4.0
+expand_margin_bottom = 4.0
+
+[node name="BuildingBalanceSlider" type="HSlider"]
+offset_left = 30.0
+offset_top = 37.0
+offset_right = 276.0
+offset_bottom = 53.0
+pivot_offset = Vector2(123, 8)
+theme_override_icons/grabber_disabled = SubResource("NoiseTexture2D_x65c8")
+theme_override_styles/slider = SubResource("StyleBoxFlat_35wx7")
+min_value = -1.0
+max_value = 1.0
+step = 0.001
+editable = false
+scrollable = false
+script = ExtResource("1_1wfpg")
